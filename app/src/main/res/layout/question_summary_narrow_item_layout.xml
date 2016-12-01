@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="io.tcl.hgl.workoverflow.entity.Question_Summary"/>
+
+        <import type="io.tcl.hgl.workoverflow.adapter.MyAdapter"/>
+
+        <import type="io.tcl.hgl.workoverflow.adapter.TagAdapter"/>
+
+        <import type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+                name="adapter"
+                type="TagAdapter"/>
+
+        <variable
+                name="layoutManager"
+                type="LayoutManager"/>
+
+        <variable
+                name="qSN"
+                type="Question_Summary"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:text="@{qSN.summary+'\n'}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="normal|bold"
+                    android:textAlignment="viewStart"
+                    />
+
+            <TextView
+                    android:onClick="@{()->MyAdapter.ItemClick(qSN)}"
+                    android:text="@{qSN.url+'\n'}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="normal|bold"
+                    android:textAlignment="viewStart"
+                    />
+
+            <TextView
+                    android:text="@{qSN.excerpt}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <TextView
+                        android:text="@{qSN.votes}"
+                        android:background="@android:color/holo_orange_dark"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="@{qSN.views}"
+                        android:background="@android:color/holo_green_dark"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="@{qSN.answers}"
+                        android:background="@android:color/holo_blue_dark"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                    android:adapter="@{adapter}"
+                    android:layoutManager="@{layoutManager}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</layout>
