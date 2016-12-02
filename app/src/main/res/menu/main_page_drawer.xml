@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/main_menu"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_questions"
+            android:title="Questions" />
+        <item
+            android:id="@+id/nav_jobs"
+            android:title="Jobs" />
+        <item
+            android:id="@+id/nav_documentation"
+            android:title="Documentation" />
+        <item
+            android:id="@+id/nav_tags"
+            android:title="Tags" />
+        <item
+            android:id="@+id/nav_users"
+            android:title="Users" />
+        <item
+            android:id="@+id/nav_badges"
+            android:title="Badges" />
+        <item
+            android:id="@+id/nav_ask_question"
+            android:title="Ask Question" />
+    </group>
+
+    <item android:title="About me">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:title="About me" />
+            <item
+                android:id="@+id/nav_contact"
+                android:title="Contact me" />
+        </menu>
+    </item>
+
+</menu>

@@ -11,7 +11,7 @@ public class TabType {
     private static final String MAIN_TAGS = "Tags";
     private static final String MAIN_USERS = "Users";
     private static final String MAIN_BADGES = "Badges";
-    private static final String MAIN_ASK_QUESTION = "Ask Question";
+    private static final String MAIN_ASK_QUESTION = "Ask Summary";
     private static final String QUESTIONS_NEWEST = "newest";
     private static final String QUESTIONS_FEATUED = "featured";
     private static final String QUESTIONS_FREQUENT = "frequent";

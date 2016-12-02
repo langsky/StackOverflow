@@ -3,4 +3,17 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="primaryButton">#1abc9c</color>
+    <color name="warningButton">#f1c40f</color>
+    <color name="defaultButton">#bdc3c7</color>
+    <color name="dangerButton">#e74c3c</color>
+    <color name="successButton">#2ecc71</color>
+    <color name="InversButton">#34495e</color>
+    <color name="InfoButton">#3498db</color>
+    <color name="DisableButton">#bdc3c7</color>
+    <color name="errorEditText">#e74c3c</color>
+    <color name="successEditText">#2ecc71</color>
+    <color name="inactiveEditText">#bdc3c7</color>
+    <color name="disableEditText">#d5dbdb</color>
+    <color name="disableEditTextBg">#f4f6f6</color>
 </resources>

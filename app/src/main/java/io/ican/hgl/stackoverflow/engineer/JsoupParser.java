@@ -4,9 +4,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import io.ican.hgl.stackoverflow.entity.question.Question;
+import io.ican.hgl.stackoverflow.entity.question.Summary;
 import io.ican.hgl.stackoverflow.entity.tab.Tab;
 import rx.Observable;
 
@@ -16,22 +17,19 @@ import rx.Observable;
 
 public class JsoupParser {
 
-    public static Observable<List<Tab>> MAIN_MENU(Element element) {
-        Elements elements = element.getElementsByClass("js-gps-track");
-        List<Tab> tabs = new ArrayList<>();
+    public static Observable<Map<String, String>> MAIN_MENU(Element element) {
+        Elements elements = element.select("a[href]");
+        Map<String, String> maps = new HashMap<>();
         for (Element e :
                 elements) {
-            Tab tab = new Tab();
-            tab.text = e.text();
-            tab.url = e.absUrl("href");
-            tabs.add(tab);
+            maps.put(e.text(), e.absUrl("href"));
         }
-        return Observable.just(tabs);
+        return Observable.just(maps);
     }
 
-    public static Observable<List<Tab>> TABS(Element element){
+    public static Observable<ArrayList<Tab>> TABS(Element element) {
         Elements elements = element.children().select("a[data-value=\"*\"]");
-        List<Tab> tabs = new ArrayList<>();
+        ArrayList<Tab> tabs = new ArrayList<>();
         for (Element e :
                 elements) {
             Tab tab = new Tab();
@@ -42,18 +40,18 @@ public class JsoupParser {
         return Observable.just(tabs);
     }
 
-    public static Question parseQSN(Element element) {
-        Question qSN = new Question();
-        qSN.id = element.id();
-        qSN.votes = element.getElementsByClass("votes").first().text();
-        qSN.answers = parseAnswered(element);
-        qSN.views = parseViews(element);
-        qSN.url = parseSummaryUrl(element);
-        qSN.summary = parseSummaryText(element);
-        qSN.tags = parseTagsName(parseTags(element), qSN.tags);
-        qSN.reputationScore = parseScore(element);
-        qSN.excerpt = parseExcerpt(element);
-        return qSN;
+    public static Summary parseQuestionSummary(Element element) {
+        Summary question = new Summary();
+        question.id = element.id();
+        question.votes = element.getElementsByClass("votes").first().text();
+        question.answers = parseAnswered(element);
+        question.views = parseViews(element);
+        question.url = parseSummaryUrl(element);
+        question.summary = parseSummaryText(element);
+        question.tags = parseTagsName(parseTags(element), question.tags);
+        question.reputationScore = parseScore(element);
+        question.excerpt = parseExcerpt(element);
+        return question;
     }
 
     private static String parseExcerpt(Element element) {
@@ -66,11 +64,22 @@ public class JsoupParser {
         return e != null ? e.text() : "";
     }
 
-    private static String parseAnswered(Element element) {
-        Element e = element.getElementsByClass("status answered-accepted").first() != null ?
-                element.getElementsByClass("status answered-accepted").first() : element.getElementsByClass("status answered").first() != null ?
-                element.getElementsByClass("status answered").first() : element.getElementsByClass("status unanswered").first();
-        return e != null ? e.text() : "";
+    private static Summary.Answers parseAnswered(Element element) {
+        Summary.Answers answers = new Summary.Answers();
+        Element e = element.getElementsByClass("status answered-accepted").first();
+        if (e != null) {
+            answers.state = Summary.ANSWERED_ACCEPTED;
+        } else {
+            e = element.getElementsByClass("status answered").first();
+            if (e != null) {
+                answers.state = Summary.ANSWERED;
+            } else {
+                e = element.getElementsByClass("status unanswered").first();
+                answers.state = Summary.UNANSWERED;
+            }
+        }
+        answers.count = e.text();
+        return answers;
     }
 
     private static String parseViews(Element element) {

@@ -13,7 +13,7 @@ import java.util.List;
 
 import io.ican.hgl.stackoverflow.databinding.QuestionSummaryBinding;
 
-import io.ican.hgl.stackoverflow.entity.question.Question;
+import io.ican.hgl.stackoverflow.entity.question.Summary;
 
 
 /**
@@ -22,10 +22,10 @@ import io.ican.hgl.stackoverflow.entity.question.Question;
 
 public class QuestionSummaryAdapter extends RecyclerView.Adapter<QuestionSummaryAdapter.MyViewHolder> {
 
-    private List<Question> items;
+    private List<Summary> items;
     private Context context;
 
-    public QuestionSummaryAdapter(List<Question> items, Context context) {
+    public QuestionSummaryAdapter(List<Summary> items, Context context) {
         this.items = items;
         this.context = context;
     }
@@ -56,7 +56,7 @@ public class QuestionSummaryAdapter extends RecyclerView.Adapter<QuestionSummary
         }
     }
 
-    public static void ItemClick(Question item) {
+    public static void ItemClick(Summary item) {
         Log.e("HHH", item.url);
     }
 }
