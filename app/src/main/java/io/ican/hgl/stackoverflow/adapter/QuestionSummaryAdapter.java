@@ -11,26 +11,28 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import io.tcl.hgl.workoverflow.databinding.QuestionSummaryNarrowItemLayoutBinding;
-import io.tcl.hgl.workoverflow.entity.Question_Summary;
+import io.ican.hgl.stackoverflow.databinding.QuestionSummaryBinding;
+
+import io.ican.hgl.stackoverflow.entity.question.Question;
+
 
 /**
  * Created by swd1 on 16-11-30.
  */
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class QuestionSummaryAdapter extends RecyclerView.Adapter<QuestionSummaryAdapter.MyViewHolder> {
 
-    private List<Question_Summary> items;
+    private List<Question> items;
     private Context context;
 
-    public MyAdapter(List<Question_Summary> items, Context context) {
+    public QuestionSummaryAdapter(List<Question> items, Context context) {
         this.items = items;
         this.context = context;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(QuestionSummaryNarrowItemLayoutBinding.inflate(LayoutInflater.from(context), parent, false).getRoot());
+        return new MyViewHolder(QuestionSummaryBinding.inflate(LayoutInflater.from(context), parent, false).getRoot());
     }
 
     @Override
@@ -46,7 +48,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        QuestionSummaryNarrowItemLayoutBinding binding;
+        QuestionSummaryBinding binding;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -54,7 +56,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
     }
 
-    public static void ItemClick(Question_Summary item) {
+    public static void ItemClick(Question item) {
         Log.e("HHH", item.url);
     }
 }

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import io.tcl.hgl.workoverflow.databinding.TagsLayoutBinding;
+import io.ican.hgl.stackoverflow.databinding.TagsLayoutBinding;
 
 /**
  * Created by swd1 on 16-12-1.

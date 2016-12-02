@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="io.tcl.hgl.workoverflow.entity.Question_Summary"/>
+        <import type="io.ican.hgl.stackoverflow.entity.question.Question"/>
 
-        <import type="io.tcl.hgl.workoverflow.adapter.MyAdapter"/>
+        <import type="io.ican.hgl.stackoverflow.adapter.QuestionSummaryAdapter"/>
 
-        <import type="io.tcl.hgl.workoverflow.adapter.TagAdapter"/>
+        <import type="io.ican.hgl.stackoverflow.adapter.TagAdapter"/>
 
         <import type="android.support.v7.widget.RecyclerView.LayoutManager"/>
 
@@ -21,7 +21,7 @@
 
         <variable
                 name="qSN"
-                type="Question_Summary"/>
+                type="Question"/>
     </data>
 
     <android.support.v7.widget.CardView
@@ -42,7 +42,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textStyle="normal|bold"
-                    android:textAlignment="viewStart"
                     />
 
             <TextView
@@ -51,7 +50,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textStyle="normal|bold"
-                    android:textAlignment="viewStart"
                     />
 
             <TextView
@@ -92,8 +90,6 @@
                     android:layoutManager="@{layoutManager}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
-
-
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>

@@ -1,19 +1,49 @@
 package io.ican.hgl.stackoverflow.engineer;
 
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import io.tcl.hgl.workoverflow.entity.Question_Summary;
+import io.ican.hgl.stackoverflow.entity.question.Question;
+import io.ican.hgl.stackoverflow.entity.tab.Tab;
+import rx.Observable;
 
 /**
- * Created by swd1 on 16-11-30.
+ * Created by hgl on 16-12-1.
  */
 
-public class QItemParser {
+public class JsoupParser {
 
-    public static Question_Summary parseQSN(Element element) {
-        Question_Summary qSN = new Question_Summary();
+    public static Observable<List<Tab>> MAIN_MENU(Element element) {
+        Elements elements = element.getElementsByClass("js-gps-track");
+        List<Tab> tabs = new ArrayList<>();
+        for (Element e :
+                elements) {
+            Tab tab = new Tab();
+            tab.text = e.text();
+            tab.url = e.absUrl("href");
+            tabs.add(tab);
+        }
+        return Observable.just(tabs);
+    }
+
+    public static Observable<List<Tab>> TABS(Element element){
+        Elements elements = element.children().select("a[data-value=\"*\"]");
+        List<Tab> tabs = new ArrayList<>();
+        for (Element e :
+                elements) {
+            Tab tab = new Tab();
+            tab.text = e.text();
+            tab.url = e.absUrl("href");
+            tabs.add(tab);
+        }
+        return Observable.just(tabs);
+    }
+
+    public static Question parseQSN(Element element) {
+        Question qSN = new Question();
         qSN.id = element.id();
         qSN.votes = element.getElementsByClass("votes").first().text();
         qSN.answers = parseAnswered(element);
