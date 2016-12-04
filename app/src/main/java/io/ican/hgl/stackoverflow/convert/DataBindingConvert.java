@@ -1,7 +1,6 @@
 package io.ican.hgl.stackoverflow.convert;
 
 import android.databinding.BindingAdapter;
-import android.util.Log;
 import android.view.View;
 
 import io.ican.hgl.stackoverflow.R;
