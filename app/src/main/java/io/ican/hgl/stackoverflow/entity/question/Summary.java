@@ -20,13 +20,13 @@ public class Summary {
     public Answers answers;
     public String views;
     public String summary;
-    public String createTime;
     public String modifyTime;
     public String user;
     public String url;
     public ArrayList<String> tags;
     public String reputationScore;
     public String excerpt;
+    public String bountyIndicator;
 
     private String[] tagsToJson(ArrayList<String> tags) {
         String[] result = new String[tags.size()];
@@ -40,10 +40,11 @@ public class Summary {
     @Override
     public String toString() {
         return String.format("{\"id\":\"%s\", \"votes\":\"%s\", \"answers\":\"%s\", \"views\":\"%s\", \"summary\":\"%s\", " +
-                        "\"createTime\":\"%s\", \"modifyTime\":\"%s\", \"user\":\"%s\", " +
+                        "\"modifyTime\":\"%s\", \"user\":\"%s\", " +
                         "\"excerpt\":\"%s\", \"tags\":" + Arrays.toString(tagsToJson(tags)) +
-                        "\"reputationScore\":\"%s\", \"url\":\"%s\"", id, votes, answers.count, views, summary, createTime,
-                modifyTime, user, excerpt, reputationScore, url);
+                        "\"reputationScore\":\"%s\", \"url\":\"%s\"" +
+                        "\"bounty-indicator\":\"%s\" ", id, votes, answers.count, views, summary,
+                modifyTime, user, excerpt, reputationScore, url, bountyIndicator);
     }
 
     public static class Answers {

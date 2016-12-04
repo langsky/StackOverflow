@@ -9,13 +9,14 @@ import io.ican.hgl.stackoverflow.entity.question.Summary;
 
 /**
  * Created by hgl on 16-12-2.
+ *
  */
 
 public class DataBindingConvert {
 
     @BindingAdapter({"bind:state"})
-    public static void stateToAnswer(View view, String state) {
-        switch (state.length()) {
+    public static void stateToAnswer(View view, int state) {
+        switch (state) {
             case Summary.ANSWERED:
                 view.setBackgroundResource(R.drawable.answered);
                 break;
@@ -27,6 +28,5 @@ public class DataBindingConvert {
                 view.setBackgroundResource(R.drawable.answered_accepted);
                 break;
         }
-        Log.e("HONSHU", "HUUHU " + state);
     }
 }

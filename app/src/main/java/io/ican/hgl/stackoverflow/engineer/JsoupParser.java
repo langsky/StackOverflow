@@ -48,10 +48,28 @@ public class JsoupParser {
         question.views = parseViews(element);
         question.url = parseSummaryUrl(element);
         question.summary = parseSummaryText(element);
-        question.tags = parseTagsName(parseTags(element), question.tags);
+        question.tags = parseTagsName(parseTags(element), new ArrayList<String>());
         question.reputationScore = parseScore(element);
         question.excerpt = parseExcerpt(element);
+        question.modifyTime = parseStarted(element);
+        question.bountyIndicator = parseBounty(element);
+        question.user = parseUser(element);
         return question;
+    }
+
+    private static String parseUser(Element element) {
+        Element e = element.getElementsByClass("summary").first().select("a[href:*user*]").first();
+        return e != null ? e.text() : "";
+    }
+
+    private static String parseBounty(Element element) {
+        Element e = element.getElementsByClass("summary").first().getElementsByClass("bounty-indicator").first();
+        return e != null ? e.text() : "";
+    }
+
+    private static String parseStarted(Element element) {
+        Element e = element.getElementsByClass("summary").first().getElementsByClass("started").first();
+        return e != null ? e.text() : "";
     }
 
     private static String parseExcerpt(Element element) {

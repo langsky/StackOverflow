@@ -18,14 +18,15 @@ import io.ican.hgl.stackoverflow.entity.question.Summary;
 
 /**
  * Created by swd1 on 16-11-30.
+ * 用来显示question-summary的adapter.
  */
 
-public class QuestionSummaryAdapter extends RecyclerView.Adapter<QuestionSummaryAdapter.MyViewHolder> {
+public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.MyViewHolder> {
 
     private List<Summary> items;
     private Context context;
 
-    public QuestionSummaryAdapter(List<Summary> items, Context context) {
+    public SummaryAdapter(List<Summary> items, Context context) {
         this.items = items;
         this.context = context;
     }
@@ -37,7 +38,7 @@ public class QuestionSummaryAdapter extends RecyclerView.Adapter<QuestionSummary
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.binding.setQSN(items.get(position));
+        holder.binding.setSummary(items.get(position));
         holder.binding.setAdapter(new TagAdapter(context, items.get(position).tags));
         holder.binding.setLayoutManager(new GridLayoutManager(context, 4));
     }
@@ -56,7 +57,4 @@ public class QuestionSummaryAdapter extends RecyclerView.Adapter<QuestionSummary
         }
     }
 
-    public static void ItemClick(Summary item) {
-        Log.e("HHH", item.url);
-    }
 }

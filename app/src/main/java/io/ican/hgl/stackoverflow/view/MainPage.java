@@ -1,12 +1,11 @@
 package io.ican.hgl.stackoverflow.view;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,24 +15,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.common.eventbus.Subscribe;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import io.ican.hgl.stackoverflow.R;
+import io.ican.hgl.stackoverflow.adapter.SummaryAdapter;
+import io.ican.hgl.stackoverflow.databinding.MainPageBinding;
 import io.ican.hgl.stackoverflow.engineer.JsoupEngineer;
 import io.ican.hgl.stackoverflow.engineer.JsoupParser;
-import io.ican.hgl.stackoverflow.entity.tab.Tab;
+import io.ican.hgl.stackoverflow.entity.question.Summary;
 import io.ican.hgl.stackoverflow.util.NavUtils;
+import io.ican.hgl.stackoverflow.view.question.QuestionPage;
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -46,11 +45,14 @@ public class MainPage extends AppCompatActivity {
     Observable<Document> document;
     String baseUrl = "http://stackoverflow.com";
 
+    MainPageBinding binding;
+    SummaryAdapter adapter;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_page);
+        binding = DataBindingUtil.setContentView(this, R.layout.main_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -62,7 +64,32 @@ public class MainPage extends AppCompatActivity {
         navUtils.setNavItemClickListener(listener);
         navUtils.setNavigationView(navigationView);
 
-        document = JsoupEngineer.MAIN(baseUrl);
+        document = JsoupEngineer.MAIN_PAGE(baseUrl);
+
+        document.map(new Func1<Document, List<Element>>() {
+            @Override
+            public List<Element> call(Document document) {
+                return document.getElementsByClass("question-summary narrow");
+            }
+        }).map(new Func1<List<Element>, List<Summary>>() {
+            @Override
+            public List<Summary> call(List<Element> elements) {
+                List<Summary> summaries = new ArrayList<>();
+                for (Element e : elements) {
+                    summaries.add(JsoupParser.parseQuestionSummary(e));
+                }
+                Log.e("HUHUHU", summaries.size() + "       size");
+                return summaries;
+            }
+        }).subscribe(new Action1<List<Summary>>() {
+            @Override
+            public void call(List<Summary> summaries) {
+                adapter = new SummaryAdapter(summaries, MainPage.this);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainPage.this);
+                binding.setAdapter(adapter);
+                binding.setLayoutManager(layoutManager);
+            }
+        });
 
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -157,12 +184,12 @@ public class MainPage extends AppCompatActivity {
 
             @Override
             public void onNext(String s) {
-                Log.e("HUHUHU", s);
+                startActivity(new Intent(MainPage.this, QuestionPage.class));
             }
         };
     }
 
-    private void startNewPage(String url){
+    private void startNewPage(String url) {
 
     }
 

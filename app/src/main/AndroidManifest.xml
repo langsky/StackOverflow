@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.QuestionPage"
+            android:name=".view.question.QuestionPage"
             android:label="@string/title_activity_question_page"
             android:theme="@style/AppTheme" />
         <activity

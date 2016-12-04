@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
+import io.ican.hgl.stackoverflow.entity.menu.MenuType;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -33,7 +34,7 @@ public class JsoupEngineer {
         return element;
     }
 
-    public static Observable<Document> MAIN(String baseUrl) {
+    public static Observable<Document> MAIN_PAGE(String baseUrl) {
         return Observable.just(baseUrl)
                 .map(new Func1<String, Document>() {
                     @Override
@@ -49,13 +50,13 @@ public class JsoupEngineer {
                 .subscribeOn(Schedulers.io());
     }
 
-    public static Observable<Document> SEARCH(String baseUrl, final Map<String, String> content) {
+    public static Observable<Document> POST_FORM(String baseUrl, final MenuType menuType, final Map<String, String> content) {
         return Observable.just(baseUrl)
                 .map(new Func1<String, Connection.Response>() {
                     @Override
                     public Connection.Response call(String s) {
                         try {
-                            return Jsoup.connect(s + "/search").userAgent("Chrome/54.0.2840.100").data(content).timeout(100000).method(Connection.Method.GET).execute();
+                            return Jsoup.connect(s + "/" + menuType.getText()).userAgent("Chrome/54.0.2840.100").data(content).timeout(100000).method(Connection.Method.GET).execute();
                         } catch (IOException e) {
                             e.printStackTrace();
                             return null;
