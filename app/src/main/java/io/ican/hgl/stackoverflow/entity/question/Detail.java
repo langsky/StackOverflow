@@ -5,4 +5,5 @@ package io.ican.hgl.stackoverflow.entity.question;
  */
 
 public class Detail extends Summary {
+
 }

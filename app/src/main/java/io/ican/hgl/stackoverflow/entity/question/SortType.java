@@ -8,7 +8,7 @@ public class SortType {
 
     public enum Question {
         QUESTIONS_NEWEST("newest"),
-        QUESTIONS_FEATUED("featured"),
+        QUESTIONS_FEATURED("featured"),
         QUESTIONS_FREQUENT("frequent"),
         QUESTIONS_VOTES("votes");
 

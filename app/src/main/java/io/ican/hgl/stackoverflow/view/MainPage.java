@@ -190,8 +190,4 @@ public class MainPage extends AppCompatActivity {
         };
     }
 
-    private void startNewPage(String url) {
-
-    }
-
 }

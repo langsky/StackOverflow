@@ -24,9 +24,4 @@ public class SummaryNarrow extends RelativeLayout{
     }
 
 
-
-
-
-
-
 }
