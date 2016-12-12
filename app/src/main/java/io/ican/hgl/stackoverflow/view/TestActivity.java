@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import org.jsoup.nodes.Document;
@@ -24,20 +27,19 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        JsoupEngineer.MAIN_PAGE("https://stackoverflow.com/questions/40958897/rendering-an-isometric-grid-in-pygame")
+        JsoupEngineer.MAIN_PAGE("https://stackoverflow.com/")
                 .map(new Func1<Document, Element>() {
                     @Override
                     public Element call(Document document) {
-                        return document.getElementsByTag("code").first();
+                        return document.body();
                     }
                 }).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Element>() {
                     @Override
                     public void call(Element element) {
-                        HtmlTextView view = (HtmlTextView) findViewById(R.id.html_text);
-                        TextView textView = (TextView) findViewById(R.id.common_text);
-                        Spanned html = Html.fromHtml(element.html(),Html.FROM_HTML_MODE_COMPACT);
-                        textView.setText(html);
+                        WebView view = (WebView) findViewById(R.id.webView);
+                        view.setWebChromeClient(new WebChromeClient());
+                        view.loadData(element.html(),"text/html","utf-8");
                     }
                 });
     }
