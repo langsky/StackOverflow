@@ -20,6 +20,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,11 @@ import io.ican.hgl.stackoverflow.adapter.SummaryAdapter;
 import io.ican.hgl.stackoverflow.databinding.MainPageBinding;
 import io.ican.hgl.stackoverflow.engineer.JsoupEngineer;
 import io.ican.hgl.stackoverflow.engineer.JsoupParser;
+import io.ican.hgl.stackoverflow.entity.menu.MenuType;
 import io.ican.hgl.stackoverflow.entity.question.Summary;
+import io.ican.hgl.stackoverflow.mvp.p.impl.MainPagePresenter;
+import io.ican.hgl.stackoverflow.mvp.v.IView;
+import io.ican.hgl.stackoverflow.util.C;
 import io.ican.hgl.stackoverflow.util.NavUtils;
 import io.ican.hgl.stackoverflow.view.question.QuestionPage;
 import rx.Observable;
@@ -36,17 +41,17 @@ import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-public class MainPage extends AppCompatActivity {
+public class MainPage extends AppCompatActivity implements IView {
+
+    private static final String TAG = "MainPage";
 
     NavUtils navUtils;
     BindDrawer drawer;
     NavListener listener;
 
-    Observable<Document> document;
-    String baseUrl = "http://stackoverflow.com";
-
     MainPageBinding binding;
-    SummaryAdapter adapter;
+
+    MainPagePresenter presenter;
 
     @Override
 
@@ -56,6 +61,11 @@ public class MainPage extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        presenter = new MainPagePresenter(this);
+        presenter.bindView(this);
+        presenter.setBinding(binding);
+        presenter.loadData();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawer = new BindDrawer();
         listener = new NavListener();
@@ -63,34 +73,6 @@ public class MainPage extends AppCompatActivity {
         navUtils.setNavBindDrawer(drawer);
         navUtils.setNavItemClickListener(listener);
         navUtils.setNavigationView(navigationView);
-
-        document = JsoupEngineer.MAIN_PAGE(baseUrl);
-
-        document.map(new Func1<Document, List<Element>>() {
-            @Override
-            public List<Element> call(Document document) {
-                return document.getElementsByClass("question-summary narrow");
-            }
-        }).map(new Func1<List<Element>, List<Summary>>() {
-            @Override
-            public List<Summary> call(List<Element> elements) {
-                List<Summary> summaries = new ArrayList<>();
-                for (Element e : elements) {
-                    summaries.add(JsoupParser.parseQuestionSummary(e));
-                }
-                Log.e("HUHUHU", summaries.size() + "       size");
-                return summaries;
-            }
-        }).subscribe(new Action1<List<Summary>>() {
-            @Override
-            public void call(List<Summary> summaries) {
-                adapter = new SummaryAdapter(summaries, MainPage.this);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainPage.this);
-                binding.setAdapter(adapter);
-                binding.setLayoutManager(layoutManager);
-            }
-        });
-
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer.bindDrawerLayout(), toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -132,9 +114,23 @@ public class MainPage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void refresh() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void error(String e) {
+
+    }
+
 
     private class BindDrawer implements NavUtils.NavBindDrawer {
-
         @Override
         public DrawerLayout bindDrawerLayout() {
             return (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -142,52 +138,16 @@ public class MainPage extends AppCompatActivity {
     }
 
     private class NavListener implements NavUtils.NavItemClickListener {
-
         @Override
         public void onNavItemClicked(final MenuItem item) {
-            if (item.getGroupId() == R.id.main_menu) {
-                getMenuUrl(item.getTitle().toString()).subscribe(subscriber());
-            }
+            presenter.getMenuUrls().subscribe(new Action1<EnumMap<MenuType, String>>() {
+                @Override
+                public void call(EnumMap<MenuType, String> menu) {
+                    Log.i(TAG, menu.get(MenuType.valueOf(item.getTitle().toString())));
+                }
+            });
         }
     }
 
-
-    private Observable<String> getMenuUrl(final String menuName) {
-        return document.flatMap(new Func1<Document, Observable<Element>>() {
-            @Override
-            public Observable<Element> call(Document document) {
-                return Observable.just(document.getElementById("hmenus"));
-            }
-        }).flatMap(new Func1<Element, Observable<Map<String, String>>>() {
-            @Override
-            public Observable<Map<String, String>> call(Element element) {
-                return JsoupParser.MAIN_MENU(element);
-            }
-        }).map(new Func1<Map<String, String>, String>() {
-            @Override
-            public String call(Map<String, String> map) {
-                return map.get(menuName);
-            }
-        });
-    }
-
-    private Subscriber<String> subscriber() {
-        return new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(String s) {
-                startActivity(new Intent(MainPage.this, QuestionPage.class));
-            }
-        };
-    }
 
 }

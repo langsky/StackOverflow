@@ -4,9 +4,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.ican.hgl.stackoverflow.entity.menu.MenuType;
 import io.ican.hgl.stackoverflow.entity.question.Summary;
 import io.ican.hgl.stackoverflow.entity.tab.Tab;
 import rx.Observable;
@@ -17,12 +19,12 @@ import rx.Observable;
 
 public class JsoupParser {
 
-    public static Observable<Map<String, String>> MAIN_MENU(Element element) {
+    public static Observable<EnumMap<MenuType, String>> MAIN_MENU(Element element) {
         Elements elements = element.select("a[href]");
-        Map<String, String> maps = new HashMap<>();
+        EnumMap<MenuType, String> maps = new EnumMap<>(MenuType.class);
         for (Element e :
                 elements) {
-            maps.put(e.text(), e.absUrl("href"));
+            maps.put(MenuType.valueOf(e.text()), e.absUrl("href"));
         }
         return Observable.just(maps);
     }

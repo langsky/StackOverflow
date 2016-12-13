@@ -18,9 +18,11 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by swd1 on 16-11-30.
+ * JsoupEngineer
  */
 
 public class JsoupEngineer {
+
     //issue 778
     public static Element removeAttr(Element element, String... attr) {
         for (Iterator<Attribute> iterator = element.attributes().iterator(); iterator.hasNext(); ) {
@@ -34,6 +36,7 @@ public class JsoupEngineer {
         return element;
     }
 
+    //获得主页信息
     public static Observable<Document> MAIN_PAGE(String baseUrl) {
         return Observable.just(baseUrl)
                 .map(new Func1<String, Document>() {
@@ -50,13 +53,14 @@ public class JsoupEngineer {
                 .subscribeOn(Schedulers.io());
     }
 
-    public static Observable<Document> POST_FORM(String baseUrl, final MenuType menuType, final Map<String, String> content) {
+    //对post方法进行封装
+    public static Observable<Document> POST_FORM(String baseUrl, final String menuType, final Map<String, String> content) {
         return Observable.just(baseUrl)
                 .map(new Func1<String, Connection.Response>() {
                     @Override
                     public Connection.Response call(String s) {
                         try {
-                            return Jsoup.connect(s + "/" + menuType.getText()).userAgent("Chrome/54.0.2840.100").data(content).timeout(100000).method(Connection.Method.GET).execute();
+                            return Jsoup.connect(s + "/" + menuType).userAgent("Chrome/54.0.2840.100").data(content).timeout(100000).method(Connection.Method.GET).execute();
                         } catch (IOException e) {
                             e.printStackTrace();
                             return null;
