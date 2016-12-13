@@ -3,43 +3,44 @@
 
     <data>
 
-        <import type="io.ican.hgl.stackoverflow.adapter.SummaryAdapter" />
+        <import type="io.ican.hgl.stackoverflow.adapter.SummaryAdapter"/>
 
-        <import type="android.support.v7.widget.RecyclerView.LayoutManager" />
-
-        <variable
-            name="adapter"
-            type="SummaryAdapter" />
+        <import type="android.support.v7.widget.RecyclerView.LayoutManager"/>
 
         <variable
-            name="layoutManager"
-            type="LayoutManager" />
+                name="adapter"
+                type="SummaryAdapter"/>
+
+        <variable
+                name="layoutManager"
+                type="LayoutManager"/>
     </data>
 
-    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start">
-
-        <include
-            layout="@layout/app_bar_main_page"
+    <android.support.v4.widget.DrawerLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:adapter="@{adapter}"
-            app:layoutManager="@{layoutManager}" />
+            android:fitsSystemWindows="true"
+            tools:openDrawer="start">
+
+        <include
+                layout="@layout/app_bar_main_page"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:adapter="@{adapter}"
+                app:layoutManager="@{layoutManager}"/>
 
         <android.support.design.widget.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_main_page"
-            app:menu="@menu/main_page_drawer" />
+                android:id="@+id/nav_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                app:headerLayout="@layout/nav_header_main_page"
+                app:menu="@menu/main_page_drawer"/>
 
     </android.support.v4.widget.DrawerLayout>
 </layout>

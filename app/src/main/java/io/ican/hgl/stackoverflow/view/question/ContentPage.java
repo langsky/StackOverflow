@@ -5,11 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,15 +17,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.ican.hgl.stackoverflow.R;
 import io.ican.hgl.stackoverflow.TheApp;
 import io.ican.hgl.stackoverflow.adapter.SummaryAdapter;
 import io.ican.hgl.stackoverflow.databinding.SubQuestionPageBinding;
 import io.ican.hgl.stackoverflow.engineer.JsoupEngineer;
 import io.ican.hgl.stackoverflow.engineer.JsoupParser;
-import io.ican.hgl.stackoverflow.entity.menu.MenuType;
 import io.ican.hgl.stackoverflow.entity.question.Summary;
-import io.ican.hgl.stackoverflow.view.MainPage;
+import io.ican.hgl.stackoverflow.util.C;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -78,7 +74,7 @@ public class ContentPage extends Fragment {
         data.put(ARG_TABS_NAME, tabName);
         data.put(ARG_TAGS_NAME, tagName);
         data.put(ARG_PAGES_NUM, pageNumber);
-        JsoupEngineer.POST_FORM(TheApp.BASE_URL, MenuType.MAIN_QUESTIONS, data)
+        JsoupEngineer.POST_FORM(TheApp.BASE_URL, C.MENU_QUESTIONS, data)
                 .map(new Func1<Document, List<Element>>() {
                     @Override
                     public List<Element> call(Document document) {

@@ -46,4 +46,9 @@ dependencies {
     compile 'com.zhy:flowlayout-lib:1.0.3'
     compile 'me.majiajie:pager-bottom-tab-strip:1.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+
+    compile ('com.github.florent37:materialviewpager:1.2.0@aar')
+            {
+                transitive = true
+            }
 }

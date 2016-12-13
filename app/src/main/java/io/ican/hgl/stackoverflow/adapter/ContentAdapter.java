@@ -1,14 +1,15 @@
-package io.ican.hgl.stackoverflow.view.question;
+package io.ican.hgl.stackoverflow.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import io.ican.hgl.stackoverflow.entity.question.SortType;
+import io.ican.hgl.stackoverflow.util.C;
+import io.ican.hgl.stackoverflow.view.question.ContentPage;
 
 /**
- * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
- * one of the sections/tabs/pages.
+ * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the
+ * sections/tabs/pages.
  */
 public class ContentAdapter extends FragmentPagerAdapter {
 
@@ -20,7 +21,7 @@ public class ContentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        String tab = SortType.Question.values()[position].getText();
+        String tab = C.QUESTION_TABS.get(position);
         String tag = "";
         String page = "1";
         return ContentPage.newInstance(tab, tag, page);
@@ -29,11 +30,11 @@ public class ContentAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 3 total pages.
-        return SortType.Question.values().length;
+        return C.QUESTION_TABS.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return SortType.Question.values()[position].getText();
+        return C.QUESTION_TABS.get(position);
     }
 }

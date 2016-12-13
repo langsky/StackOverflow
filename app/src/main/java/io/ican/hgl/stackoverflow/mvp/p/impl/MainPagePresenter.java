@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,6 @@ import io.ican.hgl.stackoverflow.adapter.SummaryAdapter;
 import io.ican.hgl.stackoverflow.databinding.MainPageBinding;
 import io.ican.hgl.stackoverflow.engineer.JsoupEngineer;
 import io.ican.hgl.stackoverflow.engineer.JsoupParser;
-import io.ican.hgl.stackoverflow.entity.menu.MenuType;
 import io.ican.hgl.stackoverflow.entity.question.Summary;
 import io.ican.hgl.stackoverflow.mvp.p.BasePresenter;
 import io.ican.hgl.stackoverflow.mvp.v.IView;
@@ -39,13 +39,14 @@ public class MainPagePresenter implements BasePresenter {
     private MainPageBinding binding;
     private Observable<Document> document;
     private Observable<List<Summary>> summaries;
-    private Observable<Map<String, String>> menuUrls;
 
     public MainPagePresenter(Context context) {
         this.context = context;
     }
 
+
     @Override
+    //load all data
     public void loadData() {
         document = JsoupEngineer.MAIN_PAGE(C.BASE_URL);
         summaries = document.map(new Func1<Document, List<Element>>() {
@@ -63,20 +64,8 @@ public class MainPagePresenter implements BasePresenter {
                 return summaries;
             }
         });
-    }
 
-    public Observable<Map<String, String>> getMenuUrls() {
-        return document.flatMap(new Func1<Document, Observable<Element>>() {
-            @Override
-            public Observable<Element> call(Document document) {
-                return Observable.just(document.getElementById(C.HEADER_MENU_ID));
-            }
-        }).flatMap(new Func1<Element, Observable<EnumMap<MenuType, String>>>() {
-            @Override
-            public Observable<EnumMap<MenuType, String>> call(Element element) {
-                return JsoupParser.MAIN_MENU(element);
-            }
-        });
+        loadCompeted();
     }
 
     @Override
@@ -110,8 +99,9 @@ public class MainPagePresenter implements BasePresenter {
 
     @Override
     public void bindView(IView iView) {
-        view =iView;
+        view = iView;
     }
+
 
     public void setBinding(MainPageBinding binding) {
         this.binding = binding;

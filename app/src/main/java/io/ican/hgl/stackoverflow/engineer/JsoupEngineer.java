@@ -1,5 +1,7 @@
 package io.ican.hgl.stackoverflow.engineer;
 
+import android.util.Log;
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Attribute;
@@ -10,7 +12,6 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
-import io.ican.hgl.stackoverflow.entity.menu.MenuType;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -22,6 +23,8 @@ import rx.schedulers.Schedulers;
  */
 
 public class JsoupEngineer {
+
+    private static final String TAG = "JsoupEngineer";
 
     //issue 778
     public static Element removeAttr(Element element, String... attr) {
@@ -43,6 +46,7 @@ public class JsoupEngineer {
                     @Override
                     public Document call(String s) {
                         try {
+                            Log.i(TAG,"connect to network");
                             return Jsoup.connect(s).userAgent("Chrome/54.0.2840.100").get();
                         } catch (IOException e) {
                             e.printStackTrace();
