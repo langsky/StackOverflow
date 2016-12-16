@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import io.ican.hgl.stackoverflow.util.C;
-import io.ican.hgl.stackoverflow.view.question.ContentPage;
+import io.ican.hgl.stackoverflow.view.activity.ContentPage;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the

@@ -7,19 +7,6 @@ import io.ican.hgl.stackoverflow.mvp.v.IView;
  * Created by swd1 on 16-12-13.
  */
 
-public class AskPresenter implements BasePresenter {
-    @Override
-    public void loadData() {
+public class AskPresenter  {
 
-    }
-
-    @Override
-    public void loadCompeted() {
-
-    }
-
-    @Override
-    public void bindView(IView iView) {
-
-    }
 }

@@ -29,6 +29,20 @@ public class C {
     public static final String MAIN_PAGE_WEEK = "week";
     public static final String MAIN_PAGE_MONTH = "month";
 
+    public static final List<String> MAIN_PAGE_TABS = new ArrayList<>();
+    public static final String TABS_ID = "tabs";
+    public static final String YOU_ARE_HERE = "youarehere";
+    public static final String PAGE_NUMBERS_CURRENT = "page-numbers current";
+
+    static {
+        MAIN_PAGE_TABS.add(MAIN_PAGE_INTERESTING);
+        MAIN_PAGE_TABS.add(MAIN_PAGE_FEATURED);
+        MAIN_PAGE_TABS.add(MAIN_PAGE_HOT);
+        MAIN_PAGE_TABS.add(MAIN_PAGE_INTERESTING);
+        MAIN_PAGE_TABS.add(MAIN_PAGE_WEEK);
+        MAIN_PAGE_TABS.add(MAIN_PAGE_MONTH);
+    }
+
     //question tabs
     public static final String QUESTIONS_NEWEST = "newest";
     public static final String QUESTIONS_FEATURED = "featured";

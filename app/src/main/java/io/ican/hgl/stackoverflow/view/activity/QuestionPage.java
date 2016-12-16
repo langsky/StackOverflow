@@ -1,4 +1,4 @@
-package io.ican.hgl.stackoverflow.view.question;
+package io.ican.hgl.stackoverflow.view.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,8 +20,6 @@ public class QuestionPage extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
     }
 
     @Override

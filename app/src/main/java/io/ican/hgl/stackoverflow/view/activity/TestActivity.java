@@ -1,4 +1,4 @@
-package io.ican.hgl.stackoverflow.view;
+package io.ican.hgl.stackoverflow.view.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

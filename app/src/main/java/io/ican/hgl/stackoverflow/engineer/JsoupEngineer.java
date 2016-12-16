@@ -58,7 +58,7 @@ public class JsoupEngineer {
     }
 
     //对post方法进行封装
-    public static Observable<Document> POST_FORM(String baseUrl, final String menuType, final Map<String, String> content) {
+    public static Observable<Document> PAGE_POST(String baseUrl, final String menuType, final Map<String, String> content) {
         return Observable.just(baseUrl)
                 .map(new Func1<String, Connection.Response>() {
                     @Override

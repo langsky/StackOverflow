@@ -1,4 +1,4 @@
-package io.ican.hgl.stackoverflow.view;
+package io.ican.hgl.stackoverflow.view.activity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -8,21 +8,16 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
-import java.util.EnumMap;
-import java.util.Map;
 
 import io.ican.hgl.stackoverflow.R;
 import io.ican.hgl.stackoverflow.databinding.MainPageBinding;
 import io.ican.hgl.stackoverflow.mvp.p.impl.MainPagePresenter;
 import io.ican.hgl.stackoverflow.mvp.v.IView;
 import io.ican.hgl.stackoverflow.util.NavUtils;
-import rx.functions.Action1;
 
 public class MainPage extends BaseActivity implements IView {
 
@@ -36,11 +31,6 @@ public class MainPage extends BaseActivity implements IView {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        presenter = new MainPagePresenter(this);
-        presenter.bindView(this);
-        presenter.setBinding(binding);
-        presenter.loadData();
     }
 
 

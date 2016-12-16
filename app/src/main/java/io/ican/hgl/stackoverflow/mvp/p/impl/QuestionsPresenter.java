@@ -16,31 +16,5 @@ import rx.Observable;
  * Created by swd1 on 16-12-13.
  */
 
-public class QuestionsPresenter implements BasePresenter {
-
-    private String tab;
-    private Context context;
-    private IView view;
-
-    private Observable<Document> document;
-    private Observable<List<Summary>> summaries;
-
-    public QuestionsPresenter(Context context) {
-        this.context = context;
-    }
-
-    @Override
-    public void loadData() {
-
-    }
-
-    @Override
-    public void loadCompeted() {
-
-    }
-
-    @Override
-    public void bindView(IView iView) {
-
-    }
+public class QuestionsPresenter {
 }

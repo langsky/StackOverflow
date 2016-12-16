@@ -1,6 +1,7 @@
 package io.ican.hgl.stackoverflow.mvp.p.impl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,16 +10,16 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import io.ican.hgl.stackoverflow.adapter.SummaryAdapter;
 import io.ican.hgl.stackoverflow.databinding.MainPageBinding;
 import io.ican.hgl.stackoverflow.engineer.JsoupEngineer;
-import io.ican.hgl.stackoverflow.engineer.JsoupParser;
+import io.ican.hgl.stackoverflow.engineer.SummaryParser;
 import io.ican.hgl.stackoverflow.entity.question.Summary;
+import io.ican.hgl.stackoverflow.mvp.m.IModel;
+import io.ican.hgl.stackoverflow.mvp.m.impl.MainPageModel;
 import io.ican.hgl.stackoverflow.mvp.p.BasePresenter;
 import io.ican.hgl.stackoverflow.mvp.v.IView;
 import io.ican.hgl.stackoverflow.util.C;
@@ -33,12 +34,15 @@ import rx.functions.Func1;
 public class MainPagePresenter implements BasePresenter {
 
     private static final String TAG = "MainPagePresenter";
-
     private Context context;
+
     private IView view;
+    private MainPageModel model;
+
     private MainPageBinding binding;
     private Observable<Document> document;
     private Observable<List<Summary>> summaries;
+
 
     public MainPagePresenter(Context context) {
         this.context = context;
@@ -46,9 +50,18 @@ public class MainPagePresenter implements BasePresenter {
 
 
     @Override
-    //load all data
-    public void loadData() {
-        document = JsoupEngineer.MAIN_PAGE(C.BASE_URL);
+    public void loadDefaultPage() {
+        parseSummary();
+        loadCompeted();
+    }
+
+    @Override
+    public void loadPage(String baseUrl, String menu, Map<String, String> content) {
+        parseSummary();
+        loadCompeted();
+    }
+
+    private void parseSummary() {
         summaries = document.map(new Func1<Document, List<Element>>() {
             @Override
             public List<Element> call(Document document) {
@@ -59,14 +72,13 @@ public class MainPagePresenter implements BasePresenter {
             public List<Summary> call(List<Element> elements) {
                 List<Summary> summaries = new ArrayList<>();
                 for (Element e : elements) {
-                    summaries.add(JsoupParser.parseQuestionSummary(e));
+                    summaries.add(SummaryParser.parseQuestionSummary(e));
                 }
                 return summaries;
             }
         });
-
-        loadCompeted();
     }
+
 
     @Override
     public void loadCompeted() {
@@ -100,6 +112,12 @@ public class MainPagePresenter implements BasePresenter {
     @Override
     public void bindView(IView iView) {
         view = iView;
+    }
+
+    @Override
+    public IModel bindModel(String url) {
+        model = new MainPageModel(url);
+        return model;
     }
 
 

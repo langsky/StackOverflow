@@ -1,4 +1,4 @@
-package io.ican.hgl.stackoverflow.view.question;
+package io.ican.hgl.stackoverflow.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +21,7 @@ import io.ican.hgl.stackoverflow.TheApp;
 import io.ican.hgl.stackoverflow.adapter.SummaryAdapter;
 import io.ican.hgl.stackoverflow.databinding.SubQuestionPageBinding;
 import io.ican.hgl.stackoverflow.engineer.JsoupEngineer;
-import io.ican.hgl.stackoverflow.engineer.JsoupParser;
+import io.ican.hgl.stackoverflow.engineer.SummaryParser;
 import io.ican.hgl.stackoverflow.entity.question.Summary;
 import io.ican.hgl.stackoverflow.util.C;
 import rx.functions.Action1;
@@ -74,7 +74,7 @@ public class ContentPage extends Fragment {
         data.put(ARG_TABS_NAME, tabName);
         data.put(ARG_TAGS_NAME, tagName);
         data.put(ARG_PAGES_NUM, pageNumber);
-        JsoupEngineer.POST_FORM(TheApp.BASE_URL, C.MENU_QUESTIONS, data)
+        JsoupEngineer.PAGE_POST(C.BASE_URL, C.MENU_QUESTIONS, data)
                 .map(new Func1<Document, List<Element>>() {
                     @Override
                     public List<Element> call(Document document) {
@@ -85,7 +85,7 @@ public class ContentPage extends Fragment {
             public List<Summary> call(List<Element> elements) {
                 List<Summary> summaries = new ArrayList<>();
                 for (Element e : elements) {
-                    summaries.add(JsoupParser.parseQuestionSummary(e));
+                    summaries.add(SummaryParser.parseQuestionSummary(e));
                 }
                 return summaries;
             }
